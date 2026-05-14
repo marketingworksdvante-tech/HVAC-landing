@@ -29,7 +29,7 @@ body{background:var(--cream);color:var(--dark);font-family:'DM Sans',sans-serif;
 
 /* ── TRUST BAR ── */
 .trust-top{background:var(--dark);padding:10px 24px;text-align:center;display:flex;align-items:center;justify-content:center;gap:24px;flex-wrap:wrap;}
-.tt-item{font-size:11px;font-weight:600;color:rgba(255,255,255,0.7);letter-spacing:0.1em;text-transform :uppercase;display:flex;align-items:center;gap:6px;}
+.tt-item{font-size:11px;font-weight:600;color:rgba(255,255,255,0.7);letter-spacing:0.1em;text-transform:uppercase;display:flex;align-items:center;gap:6px;}
 .tt-item::before{content:'✓';color:var(--amber);}
 .tt-sep{color:rgba(255,255,255,0.2);font-size:14px;}
 
@@ -656,11 +656,7 @@ footer{background:#0e0b08;border-top:1px solid rgba(255,255,255,0.06);padding:52
 <a href="tel:9515054671" class="smob">📞 Call Now for Free Quotes — (951) 505-4671</a>
 
 <script>
-const ZAPIER = "https://hooks.zapier.com/hooks/catch/27593826/4y7ud3z/";
-
-  
-
-
+const ZAPIER = "https://hooks.zapier.com/hooks/catch/27593826/4y03nma/";
 let formData = {service:'', zip:'', phone:'', name:'', email:''};
 let currentStep = 1;
 
@@ -741,32 +737,16 @@ async function submitModal() {
   document.getElementById('modal-success').style.display = 'block';
 }
 
+// ── ZAPIER ──
 async function zap(data) {
   try {
     await fetch(ZAPIER, {
       method:'POST',
-      mode:'no-cors',
-      body: JSON.stringify({
-        ...data,
-        timestamp:new Date().toISOString(),
-        source:'IE Home Comfort Landing'
-      })
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({...data, timestamp: new Date().toISOString(), source:'IE Home Comfort Landing'})
     });
-  } catch(e) {
-    console.error(e);
-  }
+  } catch(e) {}
 }
-  
-    
-    
-    
-    
-      
-      
-    
-  
-// — ZAPIER —
-
 
 // ── SMOOTH SCROLL ──
 document.querySelectorAll('a[href^="#"]').forEach(a => {
