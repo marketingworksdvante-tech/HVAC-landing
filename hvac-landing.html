@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Riverside HVAC & Plumbing | Same-Day Service | (951) 505-4671</title>
+<meta name="description" content="Fast, affordable HVAC and plumbing service in Riverside, CA. Same-day AC repair, heating, and plumbing. Call (951) 505-4671 now."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Lora:ital@1&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--dark:#0d1b2a;--navy:#0f2236;--card:#132840;--yellow:#e8a020;--red:#c0392b;--white:#ffffff;--muted:#6b8299;--border:rgba(255,255,255,0.1);}
+html{scroll-behavior:smooth;}
+body{background:var(--dark);color:var(--white);font-family:'Sora',sans-serif;overflow-x:hidden;}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:999;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal-box{background:var(--navy);border:1px solid var(--border);padding:36px;width:100%;max-width:480px;position:relative;animation:popIn 0.3s ease;}
+.modal-close{position:absolute;top:14px;right:18px;background:none;border:none;color:var(--muted);font-size:26px;cursor:pointer;line-height:1;transition:color 0.2s;}
+.modal-close:hover{color:var(--white);}
+.modal-title{font-size:20px;font-weight:800;margin-bottom:4px;}
+.modal-title span{color:var(--yellow);}
+.modal-sub{font-size:12px;color:var(--muted);margin-bottom:20px;}
+.modal-success{display:none;text-align:center;padding:24px 0;}
+.ms-icon{font-size:48px;margin-bottom:14px;}
+.ms-title{font-size:20px;font-weight:800;color:var(--yellow);margin-bottom:8px;}
+.ms-sub{font-size:13px;color:var(--muted);line-height:1.65;}
+
+/* INPUTS */
+.fi{width:100%;background:rgba(13,27,42,0.9);border:1px solid var(--border);color:var(--white);padding:13px 16px;font-family:'Sora',sans-serif;font-size:14px;outline:none;margin-bottom:10px;transition:border-color 0.2s;}
+.fi::placeholder{color:var(--muted);}
+.fi:focus{border-color:var(--yellow);}
+.fsel{width:100%;background:rgba(13,27,42,0.9);border:1px solid var(--border);color:var(--muted);padding:13px 16px;font-family:'Sora',sans-serif;font-size:14px;outline:none;margin-bottom:10px;cursor:pointer;}
+.fta{width:100%;background:rgba(13,27,42,0.9);border:1px solid var(--border);color:var(--white);padding:13px 16px;font-family:'Sora',sans-serif;font-size:14px;outline:none;margin-bottom:14px;resize:none;height:80px;}
+.fta::placeholder{color:var(--muted);}
+.fta:focus,.fi:focus{border-color:var(--yellow);}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+
+/* BUTTONS */
+.btn-y{background:var(--yellow);color:var(--dark);border:none;padding:15px 28px;font-family:'Sora',sans-serif;font-size:13px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;display:inline-block;text-decoration:none;}
+.btn-y:hover{background:#f0b030;transform:translateY(-2px);}
+.btn-o{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,0.25);padding:15px 28px;font-family:'Sora',sans-serif;font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;display:inline-block;text-decoration:none;}
+.btn-o:hover{border-color:var(--yellow);color:var(--yellow);}
+.sbtn{width:100%;background:var(--yellow);color:var(--dark);border:none;padding:16px;font-family:'Sora',sans-serif;font-size:14px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;transition:background 0.2s;margin-top:4px;}
+.sbtn:hover{background:#f0b030;}
+.sbtn:disabled{opacity:0.6;cursor:not-allowed;}
+.fnote{font-size:11px;color:var(--muted);text-align:center;margin-top:10px;}
+.link-btn{background:none;border:none;color:var(--yellow);font-family:'Sora',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;text-decoration:underline;padding:0;}
+
+/* EMERGENCY BAR */
+.ebar{background:var(--red);padding:11px 24px;text-align:center;position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;}
+.pulse{display:inline-block;width:8px;height:8px;border-radius:50%;background:white;animation:pulse 1.5s infinite;margin-right:6px;}
+.elabel{font-size:12px;font-weight:600;color:rgba(255,255,255,0.9);letter-spacing:0.04em;}
+.ephone{background:white;color:var(--red);padding:8px 18px;font-size:14px;font-weight:800;text-decoration:none;letter-spacing:0.04em;transition:background 0.2s;white-space:nowrap;}
+.ephone:hover{background:#ffe0e0;}
+.esep{color:rgba(255,255,255,0.3);}
+.ehours{font-size:11px;color:rgba(255,255,255,0.75);letter-spacing:0.1em;text-transform:uppercase;}
+
+/* NAV */
+nav{background:rgba(13,27,42,0.98);border-bottom:1px solid var(--border);padding:14px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;position:sticky;top:44px;z-index:199;}
+.nlogo{font-size:18px;font-weight:800;}
+.nlogo small{display:block;font-size:10px;font-weight:500;color:var(--muted);letter-spacing:0.15em;text-transform:uppercase;}
+.nlinks{display:flex;gap:24px;list-style:none;}
+.nlinks a{color:rgba(255,255,255,0.7);text-decoration:none;font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;transition:color 0.2s;cursor:pointer;}
+.nlinks a:hover{color:var(--yellow);}
+.nright{display:flex;align-items:center;gap:14px;}
+.nphone{font-size:16px;font-weight:800;color:var(--yellow);text-decoration:none;}
+
+/* HERO */
+.hwrap{background:linear-gradient(135deg,#0a1520 0%,#0f2236 50%,#0d1b2a 100%);}
+.hero{padding:72px 40px 80px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;max-width:1100px;margin:0 auto;}
+.hbadge{display:inline-block;background:rgba(232,160,32,0.12);border:1px solid rgba(232,160,32,0.3);padding:7px 16px;font-size:11px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--yellow);margin-bottom:24px;animation:fadeUp 0.8s ease 0.1s both;}
+.hero h1{font-size:clamp(36px,5vw,62px);font-weight:800;line-height:1.0;letter-spacing:-0.03em;animation:fadeUp 0.8s ease 0.25s both;}
+.hero h1 em{font-style:normal;color:var(--yellow);display:block;}
+.hsub{font-family:'Lora',serif;font-style:italic;font-size:16px;color:rgba(255,255,255,0.6);margin:18px 0 24px;line-height:1.7;animation:fadeUp 0.8s ease 0.4s both;}
+.htrust{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:28px;animation:fadeUp 0.8s ease 0.5s both;}
+.ht{font-size:12px;font-weight:600;color:rgba(255,255,255,0.7);}
+.ht::before{content:'✓ ';color:var(--yellow);}
+.hbtns{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px;animation:fadeUp 0.8s ease 0.65s both;}
+.hplab{font-size:10px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-top:22px;margin-bottom:5px;animation:fadeUp 0.8s ease 0.7s both;}
+.hphone{font-size:30px;font-weight:800;color:var(--yellow);text-decoration:none;display:block;animation:fadeUp 0.8s ease 0.75s both;}
+
+/* HERO FORM CARD */
+.hform{background:rgba(19,40,64,0.96);border:1px solid var(--border);padding:32px;animation:fadeUp 0.8s ease 0.3s both;}
+.hft{font-size:19px;font-weight:800;margin-bottom:4px;}
+.hft span{color:var(--yellow);}
+.hfs{font-size:12px;color:var(--muted);margin-bottom:20px;}
+.hfsuccess{display:none;text-align:center;padding:24px 0;}
+.hfsicon{font-size:44px;margin-bottom:12px;}
+.hfstitle{font-size:18px;font-weight:800;color:var(--yellow);margin-bottom:8px;}
+.hfssub{font-size:13px;color:var(--muted);line-height:1.65;}
+
+/* TRUST BAR */
+.tbar{background:var(--navy);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:16px 24px;}
+.tbari{max-width:1000px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:center;gap:18px;}
+.tb{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:600;color:rgba(255,255,255,0.7);letter-spacing:0.06em;text-transform:uppercase;}
+.tb::before{content:'✓';width:17px;height:17px;border-radius:50%;background:rgba(232,160,32,0.15);border:1px solid rgba(232,160,32,0.4);display:inline-flex;align-items:center;justify-content:center;font-size:8px;color:var(--yellow);flex-shrink:0;}
+
+/* SECTIONS */
+.sec{padding:80px 40px;}
+.seci{max-width:1100px;margin:0 auto;}
+.slabel{font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--yellow);font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:10px;}
+.slabel::before{content:'';display:block;width:20px;height:1px;background:var(--yellow);}
+.sh2{font-size:clamp(28px,4vw,50px);font-weight:800;letter-spacing:-0.03em;line-height:1.05;}
+.sh2 em{font-style:normal;color:var(--yellow);}
+
+/* SERVICES */
+.sgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:44px;}
+.scard{background:var(--card);padding:28px 22px;border-bottom:2px solid transparent;transition:all 0.3s;cursor:pointer;}
+.scard:hover{background:#1a3550;border-bottom-color:var(--yellow);transform:translateY(-2px);}
+.stag{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--yellow);font-weight:700;margin-bottom:8px;}
+.sicon{font-size:28px;margin-bottom:12px;display:block;}
+.sname{font-size:17px;font-weight:700;margin-bottom:6px;}
+.sdesc{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:12px;}
+.sprice{font-size:13px;font-weight:700;color:var(--yellow);margin-bottom:14px;}
+.slnk{background:none;border:none;color:var(--yellow);font-family:'Sora',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;text-decoration:underline;padding:0;}
+
+/* AREAS */
+.abg{background:var(--navy);}
+.agrid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:40px;}
+.acard{background:var(--card);padding:24px;transition:all 0.3s;cursor:pointer;}
+.acard:hover{background:#1a3550;}
+.acity{font-size:18px;font-weight:800;margin-bottom:4px;}
+.acity span{color:var(--yellow);}
+.azip{font-size:11px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:12px;}
+.atags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;}
+.atag{background:rgba(41,128,185,0.15);border:1px solid rgba(41,128,185,0.3);color:rgba(255,255,255,0.75);padding:4px 10px;font-size:11px;font-weight:600;}
+.aseo{font-size:12px;color:var(--muted);line-height:1.65;margin-bottom:14px;}
+.aseo strong{color:rgba(255,255,255,0.75);}
+.abtn{background:none;border:none;color:var(--yellow);font-family:'Sora',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;padding:0;}
+
+/* REVIEWS */
+.rbg{background:var(--dark);}
+.rgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:44px;}
+.rcard{background:var(--card);padding:28px;border-left:2px solid transparent;transition:border-color 0.3s;}
+.rcard:hover{border-left-color:var(--yellow);}
+.rstars{color:var(--yellow);font-size:13px;letter-spacing:2px;margin-bottom:12px;}
+.rtext{font-family:'Lora',serif;font-style:italic;font-size:14px;line-height:1.75;color:rgba(255,255,255,0.8);margin-bottom:16px;}
+.rname{font-size:13px;font-weight:700;}
+.rcity{font-size:11px;color:var(--muted);}
+.rstats{display:flex;gap:48px;justify-content:center;margin-top:52px;text-align:center;flex-wrap:wrap;}
+.rsb{font-size:48px;font-weight:800;color:var(--yellow);line-height:1;}
+.rsl{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-top:6px;}
+
+/* WHY US */
+.wbg{background:var(--navy);}
+.wgrid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;}
+.wvis{background:linear-gradient(135deg,#0f2236,#0d1b2a);aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:100px;border:1px solid var(--border);position:relative;}
+.wbadge{position:absolute;bottom:20px;right:20px;background:var(--yellow);color:var(--dark);padding:12px 16px;text-align:center;}
+.wbadge strong{display:block;font-size:22px;font-weight:800;}
+.wbadge span{font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;}
+.wpts{display:flex;flex-direction:column;gap:18px;margin:28px 0;}
+.wpt{display:flex;gap:14px;align-items:flex-start;}
+.wnum{width:34px;height:34px;border:1px solid var(--yellow);color:var(--yellow);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;}
+.wptitle{font-size:15px;font-weight:700;margin-bottom:3px;}
+.wpdesc{font-size:12px;color:var(--muted);line-height:1.5;}
+
+/* BOOKING */
+.bbg{background:linear-gradient(135deg,#0a1a2e,var(--dark));}
+.bgrid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;}
+.bbody{font-family:'Lora',serif;font-style:italic;font-size:15px;color:rgba(255,255,255,0.6);line-height:1.75;margin:16px 0 24px;}
+.cklist{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:28px;}
+.cklist li{display:flex;align-items:center;gap:12px;font-size:14px;color:rgba(255,255,255,0.8);}
+.cklist li::before{content:'✓';min-width:22px;height:22px;background:rgba(232,160,32,0.12);border:1px solid rgba(232,160,32,0.35);color:var(--yellow);display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;}
+.cbox{background:var(--card);border:1px solid var(--border);padding:20px;margin-top:4px;}
+.cbox-label{font-size:10px;color:var(--yellow);letter-spacing:0.15em;text-transform:uppercase;font-weight:700;margin-bottom:6px;}
+.cbox-phone{font-size:24px;font-weight:800;color:var(--white);text-decoration:none;display:block;}
+.cbox-sub{font-size:12px;color:var(--muted);margin-top:4px;}
+.bfcard{background:var(--card);border:1px solid var(--border);padding:32px;}
+.bftitle{font-size:18px;font-weight:700;color:var(--yellow);margin-bottom:4px;}
+.bfsub{font-size:12px;color:var(--muted);margin-bottom:22px;}
+.bsuccess{display:none;text-align:center;padding:28px 0;}
+.bsicon{font-size:44px;margin-bottom:12px;}
+.bstitle{font-size:18px;font-weight:800;color:var(--yellow);margin-bottom:8px;}
+.bssub{font-size:13px;color:var(--muted);line-height:1.65;}
+
+/* INFO BAR */
+.ibar{background:var(--navy);border-top:1px solid var(--border);}
+.igrid{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;padding:56px 40px;max-width:1100px;margin:0 auto;text-align:center;}
+.iicon{font-size:26px;margin-bottom:12px;}
+.ititle{font-size:15px;font-weight:700;color:var(--yellow);margin-bottom:8px;}
+.ibody{font-size:13px;color:var(--muted);line-height:1.7;}
+.ibody strong{color:var(--white);}
+.ibody a{color:var(--yellow);text-decoration:none;}
+
+/* FOOTER */
+footer{background:#070f18;border-top:1px solid var(--border);padding:52px 40px 32px;}
+.finner{max-width:1100px;margin:0 auto;}
+.ftop{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:40px;}
+.fbrand{font-size:20px;font-weight:800;}
+.ftagline{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin:4px 0 12px;}
+.fdesc{font-size:13px;color:var(--muted);line-height:1.7;max-width:230px;}
+.fphone{font-size:18px;font-weight:800;color:var(--yellow);text-decoration:none;display:block;margin-top:14px;}
+.fctitle{font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--yellow);font-weight:600;margin-bottom:16px;}
+.flinks{list-style:none;}
+.flinks li{margin-bottom:8px;}
+.flinks a{font-size:13px;color:var(--muted);text-decoration:none;transition:color 0.2s;cursor:pointer;}
+.flinks a:hover{color:var(--white);}
+.fbot{border-top:1px solid var(--border);padding-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.fcopy{font-size:12px;color:var(--muted);}
+.faward{font-size:11px;color:var(--yellow);}
+
+/* STICKY MOBILE */
+.smob{display:none;position:fixed;bottom:0;left:0;right:0;z-index:198;background:var(--red);color:white;padding:18px;text-align:center;font-family:'Sora',sans-serif;font-size:14px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;}
+
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(0.8);}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+@keyframes popIn{from{opacity:0;transform:scale(0.92);}to{opacity:1;transform:scale(1);}}
+
+@media(max-width:900px){
+  .hero,.wgrid,.bgrid{grid-template-columns:1fr;}
+  .sgrid,.agrid,.rgrid{grid-template-columns:1fr;}
+  .ftop{grid-template-columns:1fr 1fr;gap:32px;}
+  .igrid{grid-template-columns:1fr;gap:24px;padding:40px 20px;}
+  .smob{display:block;}
+  .sec{padding:60px 20px;}
+  nav{top:42px;}
+  .nlinks{display:none;}
+  .hero{padding:40px 20px;gap:36px;}
+  .wvis{display:none;}
+  .frow{grid-template-columns:1fr;}
+}
+@media(max-width:580px){.ftop{grid-template-columns:1fr;}.rstats{gap:24px;}.hbtns{flex-direction:column;}}
+</style>
+</head>
+<body>
+
+<!-- ══ LEAD FORM MODAL ══ -->
+<div class="modal-overlay" id="modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="mwrap">
+      <div class="modal-title">Get a <span>Free Estimate</span></div>
+      <div class="modal-sub">We call back within 30 min · No pressure · No spam</div>
+      <div class="frow"><input class="fi" id="mn" placeholder="Your Name *"/><input class="fi" id="mp" placeholder="Phone Number *" type="tel"/></div>
+      <div class="frow"><input class="fi" id="mz" placeholder="ZIP Code"/><select class="fsel" id="ms"><option value="">Service Needed</option><option>AC Repair & Installation</option><option>Heating & Furnace</option><option>Plumbing Services</option><option>Water Heater Repair</option><option>Indoor Air Quality</option><option>Maintenance Plan</option><option>Emergency Service</option></select></div>
+      <textarea class="fta" id="mpr" placeholder="Describe the problem (optional)"></textarea>
+      <button class="sbtn" id="msub" onclick="submitModal()">Send My Free Estimate →</button>
+      <p class="fnote">🔒 Your info is safe. We never sell your data.</p>
+    </div>
+    <div class="modal-success" id="msucc">
+      <div class="ms-icon">✅</div>
+      <div class="ms-title">Request Received!</div>
+      <div class="ms-sub">We'll call you back within 30 minutes.<br/>For emergencies call us directly:<br/><a href="tel:9515054671" style="color:var(--yellow);font-weight:800;">(951) 505-4671</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ EMERGENCY BAR ══ -->
+<div class="ebar">
+  <div class="elabel"><span class="pulse"></span>Need Emergency Service?</div>
+  <a href="tel:9515054671" class="ephone">Call Now: (951) 505-4671</a>
+  <span class="esep">|</span>
+  <span class="ehours">24/7 · Same-Day Available</span>
+</div>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <div class="nlogo">Peak Pro HVAC<small>Heating, Cooling & Plumbing · Est. 2001</small></div>
+  <ul class="nlinks">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#areas">Service Areas</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#booking">Contact</a></li>
+  </ul>
+  <div class="nright">
+    <a href="tel:9515054671" class="nphone">(951) 505-4671</a>
+    <button class="btn-y" onclick="openModal()">Free Estimate</button>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<div class="hwrap">
+  <div class="hero">
+    <div>
+      <div class="hbadge">🔧 Licensed & Insured · Est. 2001</div>
+      <h1>Riverside's #1 HVAC<em>& Plumbing Co.</em></h1>
+      <p class="hsub">Same-day service. Upfront pricing. No surprises.<br/>Serving Riverside, Moreno Valley, Corona & all of the IE.</p>
+      <div class="htrust">
+        <span class="ht">Licensed & Insured</span>
+        <span class="ht">Same-Day Available</span>
+        <span class="ht">Free Estimates</span>
+        <span class="ht">5-Star Rated</span>
+      </div>
+      <div class="hbtns">
+        <button class="btn-y" onclick="openModal()">Get My Free Estimate →</button>
+        <a href="tel:9515054671" class="btn-o">📞 Call Now</a>
+      </div>
+      <p class="hplab">Or call us directly — we answer 24/7</p>
+      <a href="tel:9515054671" class="hphone">(951) 505-4671</a>
+    </div>
+    <div>
+      <div class="hform">
+        <div id="hfwrap">
+          <div class="hft">Get a <span>Free Estimate</span> Today</div>
+          <div class="hfs">We respond within 30 minutes during business hours.</div>
+          <input class="fi" id="hn" placeholder="Your Name *"/>
+          <input class="fi" id="hph" placeholder="Phone Number *" type="tel"/>
+          <input class="fi" id="hz" placeholder="ZIP Code"/>
+          <textarea class="fta" id="hpr" placeholder="What's the problem?"></textarea>
+          <button class="sbtn" id="hsub" onclick="submitHero()">Get My Free Estimate →</button>
+          <p class="fnote">🔒 No spam. Your info is safe with us.</p>
+        </div>
+        <div class="hfsuccess" id="hsucc">
+          <div class="hfsicon">✅</div>
+          <div class="hfstitle">Request Received!</div>
+          <div class="hfssub">We'll call you back within 30 minutes.<br/>For emergencies call <strong style="color:var(--yellow);">(951) 505-4671</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TRUST BAR ══ -->
+<div class="tbar">
+  <div class="tbari">
+    <span class="tb">Licensed & Insured</span>
+    <span class="tb">Background Checked</span>
+    <span class="tb">5-Star Rated</span>
+    <span class="tb">Free Estimates</span>
+    <span class="tb">No Hidden Fees</span>
+    <span class="tb">24/7 Emergency</span>
+  </div>
+</div>
+
+<!-- ══ SERVICES ══ -->
+<section class="sec" id="services" style="background:var(--dark);">
+  <div class="seci">
+    <p class="slabel">What We Do</p>
+    <h2 class="sh2">Our <em>Services</em></h2>
+    <div class="sgrid">
+      <div class="scard" onclick="openModal('AC Repair & Installation')"><div class="stag">Most Requested</div><span class="sicon">❄️</span><div class="sname">AC Repair & Installation</div><div class="sdesc">All makes and models. Same-day service in Riverside, Moreno Valley & Corona.</div><div class="sprice">From $89</div><button class="slnk">Get Free Estimate →</button></div>
+      <div class="scard" onclick="openModal('Heating & Furnace')"><div class="stag">Seasonal Special</div><span class="sicon">🔥</span><div class="sname">Heating & Furnace</div><div class="sdesc">Tune-ups, repairs, full replacements. Licensed techs serving all IE cities.</div><div class="sprice">From $79</div><button class="slnk">Get Free Estimate →</button></div>
+      <div class="scard" onclick="openModal('Plumbing Services')"><div class="stag">24/7 Emergency</div><span class="sicon">🚿</span><div class="sname">Plumbing Services</div><div class="sdesc">Leaks, clogs, water heaters. Emergency response across Riverside County.</div><div class="sprice">From $99</div><button class="slnk">Get Free Estimate →</button></div>
+      <div class="scard" onclick="openModal('Water Heater Repair')"><div class="stag">High Demand</div><span class="sicon">💧</span><div class="sname">Water Heater Repair</div><div class="sdesc">Tank and tankless. Same-day repair or replacement available.</div><div class="sprice">From $149</div><button class="slnk">Get Free Estimate →</button></div>
+      <div class="scard" onclick="openModal('Indoor Air Quality')"><div class="stag">New Service</div><span class="sicon">💨</span><div class="sname">Indoor Air Quality</div><div class="sdesc">Filters, UV lights, duct cleaning. Serving families across the Inland Empire.</div><div class="sprice">Free Assessment</div><button class="slnk">Get Free Estimate →</button></div>
+      <div class="scard" onclick="openModal('Maintenance Plan')"><div class="stag">Best Value</div><span class="sicon">📋</span><div class="sname">Maintenance Plans</div><div class="sdesc">Annual tune-ups, priority scheduling, 15% off parts. Best value in the IE.</div><div class="sprice">$29/mo</div><button class="slnk">Get Free Estimate →</button></div>
+    </div>
+    <div style="text-align:center;margin-top:44px;"><button class="btn-y" onclick="openModal()">Book a Free Estimate Now →</button></div>
+  </div>
+</section>
+
+<!-- ══ SERVICE AREAS ══ -->
+<section class="sec abg" id="areas">
+  <div class="seci">
+    <p class="slabel">Where We Work</p>
+    <h2 class="sh2">Serving All of the <em>Inland Empire</em></h2>
+    <div class="agrid">
+      <div class="acard" onclick="openModal()"><div class="acity">Riverside, <span>CA</span></div><div class="azip">ZIP: 92501–92509</div><div class="atags"><span class="atag">AC Repair</span><span class="atag">Heating</span><span class="atag">Plumbing</span></div><p class="aseo">Looking for <strong>HVAC repair in Riverside CA</strong>? We provide same-day AC repair, heating service, and plumbing to all Riverside neighborhoods.</p><button class="abtn">Get Service in Riverside →</button></div>
+      <div class="acard" onclick="openModal()"><div class="acity">Moreno Valley, <span>CA</span></div><div class="azip">ZIP: 92553</div><div class="atags"><span class="atag">AC Repair</span><span class="atag">AC Install</span><span class="atag">Duct Cleaning</span></div><p class="aseo">Need <strong>AC repair in Moreno Valley</strong>? Fast response, upfront pricing. <strong>Emergency AC service</strong> available 24/7.</p><button class="abtn">Get Service in Moreno Valley →</button></div>
+      <div class="acard" onclick="openModal()"><div class="acity">Corona, <span>CA</span></div><div class="azip">ZIP: 92879</div><div class="atags"><span class="atag">HVAC Tune-Up</span><span class="atag">Water Heater</span><span class="atag">Plumbing</span></div><p class="aseo"><strong>HVAC service in Corona CA</strong> — heating, cooling, and plumbing. Free estimates on all new installations.</p><button class="abtn">Get Service in Corona →</button></div>
+      <div class="acard" onclick="openModal()"><div class="acity">Rancho Cucamonga, <span>CA</span></div><div class="azip">ZIP: 91730</div><div class="atags"><span class="atag">Water Heater</span><span class="atag">AC Repair</span><span class="atag">Heating</span></div><p class="aseo"><strong>Water heater repair in Rancho Cucamonga</strong> — tank and tankless. Same-day replacement available.</p><button class="abtn">Get Service in Rancho →</button></div>
+      <div class="acard" onclick="openModal()"><div class="acity">Ontario, <span>CA</span></div><div class="azip">ZIP: 91762</div><div class="atags"><span class="atag">AC Install</span><span class="atag">Furnace Repair</span><span class="atag">Air Quality</span></div><p class="aseo"><strong>AC installation in Ontario CA</strong> — all major brands with manufacturer warranties. Financing available.</p><button class="abtn">Get Service in Ontario →</button></div>
+      <div class="acard" onclick="openModal()"><div class="acity">Fontana, <span>CA</span></div><div class="azip">ZIP: 92335</div><div class="atags"><span class="atag">Emergency AC</span><span class="atag">Plumbing</span><span class="atag">HVAC Maintenance</span></div><p class="aseo"><strong>Emergency HVAC in Fontana CA</strong> — fast response when your AC or furnace fails. Available 24/7.</p><button class="abtn">Get Service in Fontana →</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ REVIEWS ══ -->
+<section class="sec rbg" id="reviews">
+  <div class="seci">
+    <p class="slabel">What Customers Say</p>
+    <h2 class="sh2">Real People. <em>Real Results.</em></h2>
+    <div class="rgrid">
+      <div class="rcard"><div class="rstars">★★★★★</div><p class="rtext">"AC went out on a Friday night. They were here Saturday morning. Fair price, professional tech. I'm a customer for life."</p><div class="rname">Linda T.</div><div class="rcity">Riverside, CA</div></div>
+      <div class="rcard"><div class="rstars">★★★★★</div><p class="rtext">"Fixed a leak that two other companies couldn't figure out. Honest, fast, clean work. Highly recommend."</p><div class="rname">Carlos R.</div><div class="rcity">Moreno Valley, CA</div></div>
+      <div class="rcard"><div class="rstars">★★★★★</div><p class="rtext">"Signed up for the maintenance plan and couldn't be happier. These guys are the real deal."</p><div class="rname">Beverly S.</div><div class="rcity">Rancho Cucamonga, CA</div></div>
+    </div>
+    <div class="rstats">
+      <div><div class="rsb">4.9★</div><div class="rsl">Google Rating</div></div>
+      <div><div class="rsb">1,400+</div><div class="rsl">Reviews Online</div></div>
+      <div><div class="rsb">98%</div><div class="rsl">Satisfaction</div></div>
+      <div><div class="rsb">20+</div><div class="rsl">Years in IE</div></div>
+    </div>
+    <div style="text-align:center;margin-top:44px;"><button class="btn-y" onclick="openModal()">Book Your Service Today →</button></div>
+  </div>
+</section>
+
+<!-- ══ WHY US ══ -->
+<section class="sec wbg">
+  <div class="seci">
+    <div class="wgrid">
+      <div>
+        <p class="slabel">Why Choose Us</p>
+        <h2 class="sh2">Not Just Another <em>Service Call</em></h2>
+        <div class="wpts">
+          <div class="wpt"><div class="wnum">01</div><div><div class="wptitle">On-Time Guarantee</div><div class="wpdesc">We show up in the window we promise — or your service fee is waived.</div></div></div>
+          <div class="wpt"><div class="wnum">02</div><div><div class="wptitle">Upfront Pricing</div><div class="wpdesc">You know the full cost before we start. No surprise charges ever.</div></div></div>
+          <div class="wpt"><div class="wnum">03</div><div><div class="wptitle">Background-Checked Techs</div><div class="wpdesc">Every technician is screened, trained, and certified before entering your home.</div></div></div>
+          <div class="wpt"><div class="wnum">04</div><div><div class="wptitle">Satisfaction Guaranteed</div><div class="wpdesc">If it's not right, we come back and fix it. Period.</div></div></div>
+        </div>
+        <button class="btn-y" onclick="openModal()">Book Your Estimate →</button>
+      </div>
+      <div class="wvis">🔧<div class="wbadge"><strong>20+</strong><span>Years in the IE</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ BOOKING FORM ══ -->
+<section class="sec bbg" id="booking">
+  <div class="seci">
+    <div class="bgrid">
+      <div>
+        <p class="slabel">Book Today</p>
+        <h2 class="sh2">Ready When <em>You Are</em></h2>
+        <p class="bbody">Same-day and next-day appointments available across all IE cities. We work around your schedule.</p>
+        <ul class="cklist">
+          <li>Free estimate on every job</li>
+          <li>Same-day service available</li>
+          <li>No overtime charges</li>
+          <li>Financing available on installs</li>
+          <li>Senior & military discounts</li>
+          <li>Satisfaction guarantee</li>
+        </ul>
+        <div class="cbox">
+          <div class="cbox-label">📞 Rather Call?</div>
+          <a href="tel:9515054671" class="cbox-phone">(951) 505-4671</a>
+          <div class="cbox-sub">We answer 24/7 for emergencies</div>
+        </div>
+      </div>
+      <div>
+        <div class="bfcard">
+          <div id="bfwrap">
+            <div class="bftitle">Schedule Your Visit</div>
+            <div class="bfsub">Confirmation within 2 hours during business hours.</div>
+            <div class="frow"><input class="fi" id="bn" placeholder="First Name *"/><input class="fi" id="bp" placeholder="Phone *" type="tel"/></div>
+            <div class="frow"><input class="fi" id="be" placeholder="Email" type="email"/><input class="fi" id="bc" placeholder="City / ZIP Code"/></div>
+            <select class="fsel" id="bsv"><option value="">Select Service Needed *</option><option>AC Repair & Installation</option><option>Heating & Furnace</option><option>Plumbing Services</option><option>Water Heater Repair</option><option>Indoor Air Quality</option><option>Maintenance Plan</option><option>Emergency Service</option></select>
+            <input class="fi" id="bt" placeholder="Preferred Date / Time"/>
+            <textarea class="fta" id="bi" placeholder="Describe your issue (optional)"></textarea>
+            <button class="sbtn" id="bbtn" onclick="submitBooking()">Book My Free Estimate →</button>
+          </div>
+          <div class="bsuccess" id="bsucc">
+            <div class="bsicon">🎉</div>
+            <div class="bstitle">You're All Set!</div>
+            <div class="bssub">We'll confirm your appointment within 2 hours.<br/>For urgent issues call:<br/><a href="tel:9515054671" style="color:var(--yellow);font-weight:800;">(951) 505-4671</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ INFO BAR ══ -->
+<div class="ibar">
+  <div class="igrid">
+    <div><div class="iicon">📍</div><div class="ititle">Service Area</div><div class="ibody">Riverside, CA 92507<br/>All of Riverside County & IE</div></div>
+    <div><div class="iicon">🕐</div><div class="ititle">Hours</div><div class="ibody">Mon–Sat: 7am–7pm<br/><strong>24/7 Emergency Service</strong></div></div>
+    <div><div class="iicon">📞</div><div class="ititle">Call Anytime</div><div class="ibody"><a href="tel:9515054671"><strong>(951) 505-4671</strong></a><br/>We answer 24/7 for emergencies</div></div>
+  </div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="finner">
+    <div class="ftop">
+      <div>
+        <div class="fbrand">Peak Pro HVAC</div>
+        <div class="ftagline">Heating, Cooling & Plumbing · Est. 2001</div>
+        <p class="fdesc">Licensed, insured, and committed to doing the job right. Proudly serving Riverside County and the Inland Empire.</p>
+        <a href="tel:9515054671" class="fphone">(951) 505-4671</a>
+      </div>
+      <div>
+        <div class="fctitle">Services</div>
+        <ul class="flinks">
+          <li><a onclick="openModal('AC Repair & Installation')">AC Repair & Installation</a></li>
+          <li><a onclick="openModal('Heating & Furnace')">Heating & Furnace</a></li>
+          <li><a onclick="openModal('Plumbing Services')">Plumbing Services</a></li>
+          <li><a onclick="openModal('Water Heater Repair')">Water Heater Repair</a></li>
+          <li><a onclick="openModal('Maintenance Plan')">Maintenance Plans</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="fctitle">Service Areas</div>
+        <ul class="flinks">
+          <li><a onclick="openModal()">Riverside, CA</a></li>
+          <li><a onclick="openModal()">Moreno Valley, CA</a></li>
+          <li><a onclick="openModal()">Corona, CA</a></li>
+          <li><a onclick="openModal()">Rancho Cucamonga, CA</a></li>
+          <li><a onclick="openModal()">Ontario, CA</a></li>
+          <li><a onclick="openModal()">Fontana, CA</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="fctitle">Company</div>
+        <ul class="flinks">
+          <li><a onclick="openModal()">Free Estimate</a></li>
+          <li><a href="#reviews">Reviews</a></li>
+          <li><a href="#booking">Contact Us</a></li>
+          <li><a href="tel:9515054671">Emergency Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="fbot">
+      <div class="fcopy">© 2025 Peak Pro HVAC. All Rights Reserved. Licensed & Insured. Riverside, CA.</div>
+      <div class="faward">⭐ 4.9 Stars · 1,400+ Reviews · Est. 2001</div>
+    </div>
+  </div>
+</footer>
+
+<a href="tel:9515054671" class="smob">📞 Emergency? Call Now — (951) 505-4671</a>
+
+<script>
+const ZAPIER = "https://hooks.zapier.com/hooks/catch/27593826/4y03nma/";
+
+function openModal(service) {
+  document.getElementById('modal').classList.add('open');
+  if (service) {
+    const sel = document.getElementById('ms');
+    for (let i = 0; i < sel.options.length; i++) {
+      if (sel.options[i].value === service) { sel.selectedIndex = i; break; }
+    }
+  }
+  setTimeout(() => document.getElementById('mn').focus(), 100);
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  setTimeout(() => {
+    document.getElementById('mwrap').style.display = 'block';
+    document.getElementById('msucc').style.display = 'none';
+    document.getElementById('msub').disabled = false;
+    document.getElementById('msub').textContent = 'Send My Free Estimate →';
+    ['mn','mp','mz','mpr'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('ms').selectedIndex = 0;
+  }, 300);
+}
+
+document.getElementById('modal').addEventListener('click', e => { if (e.target === document.getElementById('modal')) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+async function zap(data) {
+  try { await fetch(ZAPIER, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...data,ts:new Date().toISOString(),src:'HVAC Landing'})}); } catch(e) {}
+}
+
+async function submitModal() {
+  const n = document.getElementById('mn').value.trim();
+  const p = document.getElementById('mp').value.trim();
+  if (!n || !p) { alert('Please enter your name and phone number.'); return; }
+  const btn = document.getElementById('msub');
+  btn.disabled = true; btn.textContent = 'Sending...';
+  await zap({name:n,phone:p,zip:document.getElementById('mz').value,service:document.getElementById('ms').value,problem:document.getElementById('mpr').value,form:'modal'});
+  document.getElementById('mwrap').style.display = 'none';
+  document.getElementById('msucc').style.display = 'block';
+}
+
+async function submitHero() {
+  const n = document.getElementById('hn').value.trim();
+  const p = document.getElementById('hph').value.trim();
+  if (!n || !p) { alert('Please enter your name and phone number.'); return; }
+  const btn = document.getElementById('hsub');
+  btn.disabled = true; btn.textContent = 'Sending...';
+  await zap({name:n,phone:p,zip:document.getElementById('hz').value,problem:document.getElementById('hpr').value,form:'hero'});
+  document.getElementById('hfwrap').style.display = 'none';
+  document.getElementById('hsucc').style.display = 'block';
+}
+
+async function submitBooking() {
+  const n = document.getElementById('bn').value.trim();
+  const p = document.getElementById('bp').value.trim();
+  if (!n || !p) { alert('Please enter your name and phone number.'); return; }
+  const btn = document.getElementById('bbtn');
+  btn.disabled = true; btn.textContent = 'Submitting...';
+  await zap({name:n,phone:p,email:document.getElementById('be').value,city:document.getElementById('bc').value,service:document.getElementById('bsv').value,time:document.getElementById('bt').value,issue:document.getElementById('bi').value,form:'booking'});
+  document.getElementById('bfwrap').style.display = 'none';
+  document.getElementById('bsucc').style.display = 'block';
+}
+
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) { e.preventDefault(); t.scrollIntoView({behavior:'smooth'}); }
+  });
+});
+</script>
+</body>
+</html>
