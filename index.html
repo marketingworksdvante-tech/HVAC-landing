@@ -29,7 +29,7 @@ body{background:var(--cream);color:var(--dark);font-family:'DM Sans',sans-serif;
 
 /* ── TRUST BAR ── */
 .trust-top{background:var(--dark);padding:10px 24px;text-align:center;display:flex;align-items:center;justify-content:center;gap:24px;flex-wrap:wrap;}
-.tt-item{font-size:11px;font-weight:600;color:rgba(255,255,255,0.7);letter-spacing:0.1em;text-transform:uppercase;display:flex;align-items:center;gap:6px;}
+.tt-item{font-size:11px;font-weight:600;color:rgba(255,255,255,0.7);letter-spacing:0.1em;text-transform :uppercase;display:flex;align-items:center;gap:6px;}
 .tt-item::before{content:'✓';color:var(--amber);}
 .tt-sep{color:rgba(255,255,255,0.2);font-size:14px;}
 
@@ -737,16 +737,32 @@ async function submitModal() {
   document.getElementById('modal-success').style.display = 'block';
 }
 
-// ── ZAPIER ──
 async function zap(data) {
   try {
     await fetch(ZAPIER, {
       method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({...data, timestamp: new Date().toISOString(), source:'IE Home Comfort Landing'})
+      mode:'no-cors',
+      body: JSON.stringify({
+        ...data,
+        timestamp:new Date().toISOString(),
+        source:'IE Home Comfort Landing'
+      })
     });
-  } catch(e) {}
+  } catch(e) {
+    console.error(e);
+  }
 }
+  
+    
+    
+    
+    
+      
+      
+    }
+  }
+} ── ZAPIER ──
+
 
 // ── SMOOTH SCROLL ──
 document.querySelectorAll('a[href^="#"]').forEach(a => {
