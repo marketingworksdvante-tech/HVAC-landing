@@ -791,7 +791,8 @@ async function zap(data) {
   try {
     await fetch(ZAPIER, {
       method:'POST',
-      headers:{'Content-Type':'application/json'},
+      mode:'no-cors',
+      headers:{'Content-Type':'text/plain'},
       body: JSON.stringify({...data, timestamp: new Date().toISOString(), source:'IE Home Comfort Landing'})
     });
   } catch(e) {}
@@ -807,3 +808,4 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 </script>
 </body>
 </html>
+
